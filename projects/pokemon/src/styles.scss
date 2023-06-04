@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+mat-card{
+    height: 150px; 
+    width:250px; 
+    float: left;
+    margin: 20px;  
+}
+
+.mat-card{
+    text-align: center;
+    background-color: #ebf5f5;
+}
+
+.mat-card-header{
+    border-bottom: 3px solid #1c52bd;
+}
+
+.mat-card-content{
+    padding-top: 15px;
+}
+
+th.mat-header-cell{
+    background-color: #ebf5f5;
+}

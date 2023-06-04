@@ -1,0 +1,16 @@
+.app-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+
+  mat-toolbar {
+    flex: 0 1 auto;
+  }
+
+  .content {
+    flex: 1 1 auto;
+    padding: 1rem;
+    background-color: #F7F9F7;
+  }
+}
+

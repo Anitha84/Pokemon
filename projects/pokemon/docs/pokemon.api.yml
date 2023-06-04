@@ -1,0 +1,146 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://pokeapi.co/api/v2/
+    description: The pokemon api from pokeapi.co
+tags:
+  - name: Pokemon
+paths:
+  /pokemon:
+    get:
+      tags:
+        - "Pokemon"
+      operationId: fetchPaginatedPokemon
+      summary: Fetch Pokemons
+      parameters:
+        - in: query
+          name: offset
+          required: true
+          description: The page offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: limit
+          required: true
+          description: The limit of results per page
+          schema:
+            type: integer
+            minimum: 5
+            default: 20
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/FetchPokemons"
+  /pokemon/{id}:
+    get:
+      tags:
+        - "Pokemon"
+      operationId: fetchPokemonById
+      summary: Fetch Pokemon by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the pokemon
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Pokemon"
+  /pokemon/{name}:
+    get:
+      tags:
+        - "Pokemon"
+      operationId: fetchPokemonByName
+      summary: Fetch Pokemon by name
+      parameters:
+        - in: path
+          name: name
+          required: true
+          description: The name of the pokemon
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Pokemon"
+  /pokemon/{id}.png:
+    get:
+      tags:
+        - "Pokemon"
+      operationId: fetchPokemonImage
+      summary: Fetch Pokemon image by id
+      servers:
+        - url: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/
+          description: the url to fetch the images
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the pokemon
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+
+components:
+  schemas:
+    Pokemon:
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        height:
+          type: number
+        weight:
+          type: number
+    FetchPokemons:
+      description: Paginated list of pokemon names and the url
+      properties:
+        count:
+          type: number
+        next:
+          type: string
+        previous:
+          type: string
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/FetchPokemon'
+    FetchPokemon:
+      description: Pokemon name and url
+      properties:
+        name:
+          type: string
+          description: the name of the pokemon
+          example: "bulbasaur"
+        url:
+          type: string
+          description: the url of the pokemon
+          example: "https://pokeapi.co/api/v2/pokemon/1/"
+
